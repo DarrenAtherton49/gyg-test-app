@@ -7,5 +7,5 @@ interface DataManager {
 
     fun getReviews(): Observable<List<Review>>
 
-    fun getCachedReviews(): Observable<List<Review>?>
+    fun getCachedReviews(): Observable<List<Review>>
 }

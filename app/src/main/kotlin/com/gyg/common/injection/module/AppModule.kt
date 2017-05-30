@@ -2,7 +2,10 @@ package com.gyg.common.injection.module
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
+import android.preference.PreferenceManager
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.gyg.BuildConfig
 import com.gyg.common.threading.AndroidUiThread
@@ -40,6 +43,10 @@ class AppModule(private val application: Application) {
         return application
     }
 
+    @Provides @Singleton internal fun provideSharedPrefs(): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(application)
+    }
+
     @Provides @Singleton internal fun provideUiThread(androidUiThread: AndroidUiThread): UiThread {
         return androidUiThread
     }
@@ -56,7 +63,9 @@ class AppModule(private val application: Application) {
         return GygDataManager(reviewService, cache, config, networkManager)
     }
 
-    @Provides @Singleton internal fun provideCache(): Cache = DiskCache()
+    @Provides @Singleton internal fun provideCache(sharedPreferences: SharedPreferences): Cache {
+        return DiskCache(sharedPreferences, Gson())
+    }
 
     @Provides @Singleton internal fun provideConfig(): Config = InMemoryConfig()
 

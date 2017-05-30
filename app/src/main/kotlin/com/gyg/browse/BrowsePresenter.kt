@@ -23,7 +23,7 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
     override fun onViewAttached() {
         addToAutoUnsubscribe {
             dataManager.getCachedReviews().subscribe { cachedReviews ->
-                if (cachedReviews == null || cachedReviews.isEmpty()) {
+                if (cachedReviews.isEmpty()) {
                     showEmptyAndLoadingState()
                 } else {
                     showPopulatedState(cachedReviews)
@@ -57,7 +57,7 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
     private fun resolveError(error: Throwable) {
         if (error is NetworkUnavailableException) {
             dataManager.getCachedReviews().subscribe { cachedReviews ->
-                if (cachedReviews == null || cachedReviews.isEmpty()) {
+                if (cachedReviews.isEmpty()) {
                     showOfflineWithoutDataState()
                 } else {
                     showOfflineWithDataState(cachedReviews)

@@ -29,13 +29,14 @@ class GygDataManager @Inject constructor(val reviewService: ReviewService,
                             cache.saveReviews(reviews)
                             currentPage++
                         }
+                        .map { cache.getReviews() }
             }
         } else {
             Observable.error(NetworkUnavailableException())
         }
     }
 
-    override fun getCachedReviews(): Observable<List<Review>?> {
+    override fun getCachedReviews(): Observable<List<Review>> {
         return Observable.fromCallable { cache.getReviews() }
     }
 }

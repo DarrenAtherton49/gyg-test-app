@@ -2,6 +2,8 @@ package com.gyg.browse
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.gyg.R
 import com.gyg.common.injection.scope.PerScreen
@@ -24,7 +26,12 @@ class BrowseAdapter constructor(var reviews: List<Review> = emptyList())
             title.text = review.title
             message.text = review.message
             authorDate.text = String.format(Locale.getDefault(), "%s - %s", review.author, review.date)
-            ratingBar.rating = review.rating.toFloat()
+            try {
+                ratingBar.rating = review.rating.toFloat()
+                ratingBar.visibility = VISIBLE
+            } catch (e: Exception) {
+                ratingBar.visibility = GONE
+            }
         }
     }
 
