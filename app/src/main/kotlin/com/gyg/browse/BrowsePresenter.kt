@@ -63,6 +63,8 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
                     showOfflineWithDataState(cachedReviews)
                 }
             }
+        } else {
+            view?.showGenericError()
         }
     }
 
@@ -96,6 +98,7 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
         fun hideLoading()
         fun showList()
         fun hideList()
+        fun showGenericError()
         fun showOfflineMessage()
         fun updateReviews(reviews: List<Review>)
         fun openSubmitScreen()

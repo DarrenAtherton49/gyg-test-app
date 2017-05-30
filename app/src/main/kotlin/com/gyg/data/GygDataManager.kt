@@ -22,9 +22,9 @@ class GygDataManager @Inject constructor(val reviewService: ReviewService,
     override fun getReviews(): Observable<List<Review>> {
         return if (networkManager.isOnline()) {
             with(config) {
-                reviewService.getReviews(tour = tour, count = reviewCount, page = currentPage)
+                reviewService.getReviews(tour = tourUrl, count = reviewCount, page = currentPage)
                         .retryWhen(RetryWithDelay(numTimesToRetry, millisecondsBetweenRetries))
-                        .map(::reviewsDataToApplication)
+                        .map(::getReviewsNetworkToApplication)
                         .doOnNext { reviews ->
                             cache.saveReviews(reviews)
                             currentPage++
@@ -38,5 +38,17 @@ class GygDataManager @Inject constructor(val reviewService: ReviewService,
 
     override fun getCachedReviews(): Observable<List<Review>> {
         return Observable.fromCallable { cache.getReviews() }
+    }
+
+    override fun submitReview(review: Review): Observable<Review?> {
+        return if (networkManager.isOnline()) {
+            with(config) {
+                reviewService.submitReview(url = submitUrl, data = reviewApplicationToNetwork(review))
+                        .retryWhen(RetryWithDelay(numTimesToRetry, millisecondsBetweenRetries))
+                        .map(::submitReviewNetworkToApplication)
+            }
+        } else {
+            Observable.error(NetworkUnavailableException())
+        }
     }
 }

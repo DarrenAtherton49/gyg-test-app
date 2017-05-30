@@ -8,4 +8,6 @@ interface DataManager {
     fun getReviews(): Observable<List<Review>>
 
     fun getCachedReviews(): Observable<List<Review>>
+
+    fun submitReview(review: Review): Observable<Review?>
 }

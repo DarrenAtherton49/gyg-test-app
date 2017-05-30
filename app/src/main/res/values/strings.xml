@@ -6,6 +6,7 @@
     <string name="action_submit_review">Submit review</string>
     <string name="action_submit">Submit</string>
     <string name="offline_message">Please check your network connection</string>
+    <string name="generic_error_message">Something went wrong, please try again</string>
     <string name="hint_author">Author</string>
     <string name="hint_title">Title</string>
     <string name="hint_message">Message</string>

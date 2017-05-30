@@ -2,7 +2,9 @@ package com.gyg.data.config
 
 interface Config {
 
-    val tour: String
+    val tourUrl: String
+
+    val submitUrl: String
 
     val reviewCount: Int
 

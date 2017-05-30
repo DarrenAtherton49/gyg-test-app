@@ -85,6 +85,10 @@ class BrowseActivity : BaseActivity<BrowsePresenter.View, BrowsePresenter>(), Br
         recyclerView.visibility = GONE
     }
 
+    override fun showGenericError() {
+        Snackbar.make(coordinatorLayout, getString(R.string.generic_error_message), LENGTH_LONG).show()
+    }
+
     override fun showOfflineMessage() {
         Snackbar.make(coordinatorLayout, getString(R.string.offline_message), LENGTH_LONG).show()
     }
