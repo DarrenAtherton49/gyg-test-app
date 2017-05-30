@@ -21,13 +21,13 @@ abstract class BasePresenter<View: BaseView> {
         view = null
     }
 
-    /*
+    /**
      * Implement this method to perform initialisation, subscribe to any reactive
      * streams/observables etc. when the view is attached.
      */
     protected abstract fun onViewAttached()
 
-    /*
+    /**
      * Implement this method to stop any running tasks etc. when the view is detached.
      * Reactive subscriptions will automatically be unsubscribed via unsubscribeSubscriptions() if
      * they are added to the compositeSubscription via addToAutoUnsubscribe()

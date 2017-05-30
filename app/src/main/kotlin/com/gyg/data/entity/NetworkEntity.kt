@@ -1,5 +1,9 @@
 package com.gyg.data.entity
 
+/**
+ * Entities which are only used at the data/network level.
+ */
+
 data class GetReviewsResponse(val status: Boolean,
                               val total_reviews: Int,
                               @Suppress("ArrayInDataClass") val data: Array<ReviewData>)

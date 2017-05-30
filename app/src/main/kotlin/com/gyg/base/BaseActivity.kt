@@ -11,8 +11,11 @@ abstract class BaseActivity<View: BaseView, out Presenter : BasePresenter<View>>
     protected abstract val presenter: Presenter
     protected abstract val layoutResId: Int
 
+    /**
+     * In each activity that extends this, automatically set up the content view, specify
+     * dependency injection and attach the presenter.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
-        // The activity is being created.
         super.onCreate(savedInstanceState)
 
         setContentView(layoutResId)
@@ -22,28 +25,10 @@ abstract class BaseActivity<View: BaseView, out Presenter : BasePresenter<View>>
         presenter.viewAttached(passiveView)
     }
 
-    override fun onStart() {
-        // The activity is about to become visible.
-        super.onStart()
-    }
-
-    override fun onResume() {
-        // The activity has become visible (it is now "resumed").
-        super.onResume()
-    }
-
-    override fun onPause() {
-        // Another activity is taking focus (this activity is about to be "paused").
-        super.onPause()
-    }
-
-    override fun onStop() {
-        // The activity is no longer visible (it is now "stopped")
-        super.onStop()
-    }
-
+    /**
+     * In each activity that extends this, automatically detach the presenter.
+     */
     override fun onDestroy() {
-        // The activity is about to be destroyed.
         presenter.viewDetached()
         super.onDestroy()
     }

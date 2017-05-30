@@ -19,6 +19,13 @@ class GygDataManager @Inject constructor(val reviewService: ReviewService,
 
     private var currentPage = 0
 
+    /**
+     * Fetches reviews from the server.
+     * If the request fails, a number of retries will occur according to the values specified in
+     * the config.
+     * Upon a successful request, the reviews are saved in the cached, and the combined list of
+     * current reviews and new reviews are returned.
+     */
     override fun getReviews(): Observable<List<Review>> {
         return if (networkManager.isOnline()) {
             with(config) {
@@ -36,10 +43,17 @@ class GygDataManager @Inject constructor(val reviewService: ReviewService,
         }
     }
 
+    /**
+     * Returns cached reviews so that we have something to show immediately or in the case that
+     * the application is offline.
+     */
     override fun getCachedReviews(): Observable<List<Review>> {
         return Observable.fromCallable { cache.getReviews() }
     }
 
+    /**
+     * Submits a new review to the server.
+     */
     override fun submitReview(review: Review): Observable<Review?> {
         return if (networkManager.isOnline()) {
             with(config) {

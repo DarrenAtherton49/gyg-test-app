@@ -20,6 +20,9 @@ class SubmitPresenter @Inject constructor(val dataManager: DataManager,
 
     override fun onViewDetached() {}
 
+    /**
+     * Called when submit is clicked, takes the data entered and submits a new review to the server.
+     */
     fun onSubmitClicked(review: Review) {
         showSubmittingState()
 

@@ -59,7 +59,7 @@ class BrowseActivity : BaseActivity<BrowsePresenter.View, BrowsePresenter>(), Br
         DaggerBrowseViewComponent.builder()
                 .appComponent(appComponent())
                 .activityModule(activityModule())
-                .browseViewModule(BrowseViewModule(this))
+                .browseViewModule(BrowseViewModule())
                 .build()
                 .inject(this)
     }

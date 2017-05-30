@@ -39,6 +39,9 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
         view?.openSubmitScreen()
     }
 
+    /**
+     * Loads reviews from server and update UI state.
+     */
     private fun refreshReviews() {
         addToAutoUnsubscribe {
             dataManager.getReviews()
@@ -54,6 +57,9 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
         }
     }
 
+    /**
+     * Decides which UI state to show based on the error passed in.
+     */
     private fun resolveError(error: Throwable) {
         if (error is NetworkUnavailableException) {
             dataManager.getCachedReviews().subscribe { cachedReviews ->
