@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">GetYourGuide</string>
+    <string name="activity_browse_title">Browse Reviews</string>
+    <string name="activity_submit_title">Add Review</string>
     <string name="action_settings">Settings</string>
     <string name="action_submit_review">Submit review</string>
+    <string name="action_submit">Submit</string>
     <string name="offline_message">Please check your network connection</string>
+    <string name="hint_author">Author</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_message">Message</string>
 </resources>

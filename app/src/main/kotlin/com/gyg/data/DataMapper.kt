@@ -16,11 +16,7 @@ internal fun reviewDataToApplication(review: ReviewData): Review = with(review) 
     Review(review_id,
             rating,
             title,
-            message
-            , author,
-            foreignLanguage,
-            date,
-            languageCode,
-            reviewerName,
-            reviewerCountry)
+            message,
+            author,
+            date)
 }

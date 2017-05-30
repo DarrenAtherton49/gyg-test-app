@@ -36,7 +36,7 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
     override fun onViewDetached() {}
 
     fun onSubmitReviewClicked() {
-        //todo open dialog or new activity
+        view?.openSubmitScreen()
     }
 
     private fun refreshReviews() {
@@ -98,5 +98,6 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
         fun hideList()
         fun showOfflineMessage()
         fun updateReviews(reviews: List<Review>)
+        fun openSubmitScreen()
     }
 }

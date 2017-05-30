@@ -1,5 +1,6 @@
 package com.gyg.browse
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.design.widget.Snackbar
@@ -16,6 +17,7 @@ import com.gyg.base.BaseActivity
 import com.gyg.common.injection.component.DaggerBrowseViewComponent
 import com.gyg.common.injection.module.BrowseViewModule
 import com.gyg.data.entity.Review
+import com.gyg.submit.SubmitActivity
 import kotlinx.android.synthetic.main.activity_browse.*
 import kotlinx.android.synthetic.main.content_browse.*
 import javax.inject.Inject
@@ -38,15 +40,11 @@ class BrowseActivity : BaseActivity<BrowsePresenter.View, BrowsePresenter>(), Br
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_browse, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
         if (id == R.id.action_submit_review) {
@@ -93,5 +91,9 @@ class BrowseActivity : BaseActivity<BrowsePresenter.View, BrowsePresenter>(), Br
 
     override fun updateReviews(reviews: List<Review>) {
         browseAdapter.replaceData(reviews)
+    }
+
+    override fun openSubmitScreen() {
+        startActivity(Intent(this, SubmitActivity::class.java))
     }
 }
