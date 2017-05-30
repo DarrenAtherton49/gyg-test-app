@@ -31,6 +31,7 @@ class SubmitActivity : BaseActivity<SubmitPresenter.View, SubmitPresenter>(), Su
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = getString(R.string.activity_submit_title)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

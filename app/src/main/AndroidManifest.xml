@@ -15,7 +15,6 @@
         <activity
             android:name=".browse.BrowseActivity"
             android:hardwareAccelerated="true"
-            android:label="@string/activity_browse_title"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -26,7 +25,6 @@
 
         <activity
             android:name=".submit.SubmitActivity"
-            android:label="@string/activity_submit_title"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme"/>
 

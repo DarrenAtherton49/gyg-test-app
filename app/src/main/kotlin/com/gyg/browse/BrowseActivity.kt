@@ -35,6 +35,7 @@ class BrowseActivity : BaseActivity<BrowsePresenter.View, BrowsePresenter>(), Br
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.activity_browse_title)
 
         initRecyclerView()
     }
