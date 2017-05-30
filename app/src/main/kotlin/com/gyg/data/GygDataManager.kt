@@ -21,13 +21,15 @@ class GygDataManager @Inject constructor(val reviewService: ReviewService,
 
     override fun getReviews(): Observable<List<Review>> {
         return if (networkManager.isOnline()) {
-            reviewService.getReviews(tour = config.tour, count = config.reviewCount, page = currentPage)
-                    .retryWhen(RetryWithDelay(config.numTimesToRetry, config.millisecondsBetweenRetries))
-                    .map(::reviewsDataToApplication)
-                    .doOnNext { reviews ->
-                        cache.saveReviews(reviews)
-                        currentPage++
-                    }
+            with(config) {
+                reviewService.getReviews(tour = tour, count = reviewCount, page = currentPage)
+                        .retryWhen(RetryWithDelay(numTimesToRetry, millisecondsBetweenRetries))
+                        .map(::reviewsDataToApplication)
+                        .doOnNext { reviews ->
+                            cache.saveReviews(reviews)
+                            currentPage++
+                        }
+            }
         } else {
             Observable.error(NetworkUnavailableException())
         }

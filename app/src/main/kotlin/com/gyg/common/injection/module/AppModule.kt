@@ -2,7 +2,9 @@ package com.gyg.common.injection.module
 
 import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
 import com.google.gson.GsonBuilder
+import com.gyg.BuildConfig
 import com.gyg.common.threading.AndroidUiThread
 import com.gyg.common.threading.IoExecutor
 import com.gyg.common.threading.RxIoExecutor
@@ -18,6 +20,7 @@ import com.gyg.util.AndroidNetworkManager
 import com.gyg.util.NetworkManager
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -57,16 +60,39 @@ class AppModule(private val application: Application) {
 
     @Provides @Singleton internal fun provideConfig(): Config = InMemoryConfig()
 
-    @Provides @Singleton internal fun provideNetworkManager(): NetworkManager = AndroidNetworkManager()
+    @Provides @Singleton internal fun provideNetworkManager(context: Context): NetworkManager {
+        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return AndroidNetworkManager(manager)
+    }
 
     @Provides @Singleton internal fun provideReviewService(): ReviewService {
 
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
+
+        val headersInterceptor = Interceptor { chain ->
+            val original = chain.request()
+
+            val request = original.newBuilder()
+                    .addHeader("User-Agent", "GYG-Android")
+                    .method(original.method(), original.body())
+                    .build()
+
+            chain.proceed(request)
+        }
+
+        val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .addInterceptor(headersInterceptor)
+                .build()
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://www.getyourguide.com/")
-                .client(OkHttpClient.Builder().addInterceptor(logging).build())
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()

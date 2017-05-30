@@ -1,8 +1,11 @@
 package com.gyg.util
 
-class AndroidNetworkManager : NetworkManager {
+import android.net.ConnectivityManager
+
+class AndroidNetworkManager(val connectivityManager: ConnectivityManager) : NetworkManager {
 
     override fun isOnline(): Boolean {
-        return true //todo implement with android
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isAvailable && networkInfo.isConnected
     }
 }

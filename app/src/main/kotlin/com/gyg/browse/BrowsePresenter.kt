@@ -35,6 +35,10 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
 
     override fun onViewDetached() {}
 
+    fun onSubmitReviewClicked() {
+        //todo open dialog or new activity
+    }
+
     private fun refreshReviews() {
         addToAutoUnsubscribe {
             dataManager.getReviews()
@@ -93,6 +97,6 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
         fun showList()
         fun hideList()
         fun showOfflineMessage()
-        fun updateReviews(review: List<Review>)
+        fun updateReviews(reviews: List<Review>)
     }
 }
