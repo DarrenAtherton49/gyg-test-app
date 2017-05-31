@@ -26,22 +26,24 @@ class SubmitPresenter @Inject constructor(val dataManager: DataManager,
     fun onSubmitClicked(review: Review) {
         showSubmittingState()
 
-        dataManager.submitReview(review)
-                .subscribeOn(ioExecutor.scheduler)
-                .observeOn(mainThread.scheduler)
-                .subscribe({ review ->
-                    if (review != null) {
-                        showSuccess()
-                    } else {
-                        showGenericError()
-                    }
-                }, { throwable ->
-                    if (throwable is NetworkUnavailableException) {
-                        showOfflineState()
-                    } else {
-                        showGenericError()
-                    }
-                })
+        addToAutoUnsubscribe {
+            dataManager.submitReview(review)
+                    .subscribeOn(ioExecutor.scheduler)
+                    .observeOn(mainThread.scheduler)
+                    .subscribe({ review ->
+                        if (review != null) {
+                            showSuccess()
+                        } else {
+                            showGenericError()
+                        }
+                    }, { throwable ->
+                        if (throwable is NetworkUnavailableException) {
+                            showOfflineState()
+                        } else {
+                            showGenericError()
+                        }
+                    })
+        }
     }
 
     private fun showSubmittingState() {

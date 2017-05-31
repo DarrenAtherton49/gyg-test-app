@@ -62,11 +62,13 @@ class BrowsePresenter @Inject constructor(val dataManager: DataManager,
      */
     private fun resolveError(error: Throwable) {
         if (error is NetworkUnavailableException) {
-            dataManager.getCachedReviews().subscribe { cachedReviews ->
-                if (cachedReviews.isEmpty()) {
-                    showOfflineWithoutDataState()
-                } else {
-                    showOfflineWithDataState(cachedReviews)
+            addToAutoUnsubscribe {
+                dataManager.getCachedReviews().subscribe { cachedReviews ->
+                    if (cachedReviews.isEmpty()) {
+                        showOfflineWithoutDataState()
+                    } else {
+                        showOfflineWithDataState(cachedReviews)
+                    }
                 }
             }
         } else {
